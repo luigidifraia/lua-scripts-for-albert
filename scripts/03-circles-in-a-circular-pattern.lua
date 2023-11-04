@@ -7,6 +7,8 @@ require "math"
 cycle = 20
 radius = 78
 
+invalidateoff() -- disable the auto-refresh
+
 drawclear()
 
 for f = 0, cycle - 1 do
@@ -15,3 +17,5 @@ for f = 0, cycle - 1 do
   y = 150 + radius*math.sin(a)
   drawcircle(x, y, 20, 7)
 end
+
+drawrefresh()  -- force a refresh of the drawing

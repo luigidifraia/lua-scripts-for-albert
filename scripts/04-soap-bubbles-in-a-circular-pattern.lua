@@ -7,6 +7,8 @@ require "math"
 cycle = 20
 radius = 78
 
+invalidateoff() -- disable the auto-refresh
+
 drawclear()
 
 for f = 0, cycle - 1 do
@@ -18,3 +20,5 @@ for f = 0, cycle - 1 do
   drawcirclef(x, y, s, 5)
   drawcirclef(x + s/2 - 1, y - s/2 + 1, 2, 13)
 end
+
+drawrefresh()  -- force a refresh of the drawing

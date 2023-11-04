@@ -7,6 +7,8 @@ s = 28
 i = 0
 x = 0
 
+invalidateoff() -- disable the auto-refresh
+
 drawclear()
 
 r = s/2 + 1
@@ -30,3 +32,5 @@ while i <= 416 - r do
   i = i + s + p
   x = x + 1
 end
+
+drawrefresh()  -- force a refresh of the drawing
