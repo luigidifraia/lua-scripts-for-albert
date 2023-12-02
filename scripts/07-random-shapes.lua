@@ -5,6 +5,8 @@ Based on https://stackoverflow.com/questions/40891423/how-to-call-a-random-funct
 
 require "math"
 
+draw_cnt = 2 -- draw each shape twice to be aggressive with color clashing
+
 x_min = 0
 x_max = 415
 y_min = 51
@@ -19,7 +21,10 @@ function random_line()
   local x_to = math.random(x_min, x_max)
   local y_to = math.random(y_min, y_max)
   local color = math.random(0, 15)
-  drawline(x_from, y_from, x_to, y_to, color)
+  local i
+  for i = 1, draw_cnt do
+    drawline(x_from, y_from, x_to, y_to, color)
+  end
 end
 
 function random_rectangle()
@@ -28,12 +33,15 @@ function random_rectangle()
   local width = math.random(shape_min_dim, shape_max_dim)
   local height = math.random(shape_min_dim, shape_max_dim)
   local color = math.random(0, 15)
+  local i
   if (x+width > x_max) then width = x_max-x end
   if (y+height > y_max) then height = y_max-y end
-  drawline(x, y, x+width, y, color)
-  drawline(x+width, y, x+width, y+height, color)
-  drawline(x+width, y+height, x, y+height, color)
-  drawline(x, y+height, x, y, color)
+  for i = 1, draw_cnt do
+    drawline(x, y, x+width, y, color)
+    drawline(x+width, y, x+width, y+height, color)
+    drawline(x+width, y+height, x, y+height, color)
+    drawline(x, y+height, x, y, color)
+  end
 end
 
 function normalise_radius(x, y, r)
@@ -45,7 +53,7 @@ function normalise_radius(x, y, r)
 end
 
 function random_circle()
-  local x_center, y_center, radius, color
+  local x_center, y_center, radius, color, i
   repeat
     x_center = math.random(x_min, x_max)
     y_center = math.random(y_min, y_max)
@@ -53,15 +61,17 @@ function random_circle()
     color = math.random(0, 15)
     radius = normalise_radius(x_center, y_center, radius)
   until (radius > 0)
-  if (x_center % 2 == 0) then
-    drawcircle(x_center, y_center, radius, color)
-  else
-    drawcirclef(x_center, y_center, radius, color)
+  for i = 1, draw_cnt do
+    if (x_center % 2 == 0) then
+      drawcircle(x_center, y_center, radius, color)
+    else
+      drawcirclef(x_center, y_center, radius, color)
+    end
   end
 end
 
 function random_ellipse()
-  local x_center, y_center, radius_x, radius_y, color
+  local x_center, y_center, radius_x, radius_y, color, i
   repeat
     x_center = math.random(x_min, x_max)
     y_center = math.random(y_min, y_max)
@@ -71,10 +81,12 @@ function random_ellipse()
     radius_x = normalise_radius(x_center, y_center, radius_x)
     radius_y = normalise_radius(x_center, y_center, radius_y)
   until (radius_x > 0 and radius_y > 0)
-  if (x_center % 2 == 0) then
-    drawellipse(x_center, y_center, radius_x, radius_y, color)
-  else
-    drawellipsef(x_center, y_center, radius_x, radius_y, color)
+  for i = 1, draw_cnt do
+    if (x_center % 2 == 0) then
+      drawellipse(x_center, y_center, radius_x, radius_y, color)
+    else
+      drawellipsef(x_center, y_center, radius_x, radius_y, color)
+    end
   end
 end
 
