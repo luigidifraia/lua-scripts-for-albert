@@ -5,8 +5,10 @@ Based on https://stackoverflow.com/questions/40891423/how-to-call-a-random-funct
 
 require "math"
 
-draw_cnt = 2 -- draw each shape twice to be aggressive with color clashing
+-- draw each shape twice to be aggressive with color clashing
+draw_cnt = 2
 
+-- editable area extents
 x_min = 0
 x_max = 415
 y_min = 51
@@ -53,7 +55,8 @@ function random_rectangle()
   end
 end
 
-function normalise_radius(x, y, r)
+-- recalculate the radius of a circle or ellipse so they fit into the editable area
+function reduce_radius(x, y, r)
   if (x-r < 0) then r = x end
   if (x+r > x_max) then r = x_max-x end
   if (y-r < y_min) then r = y-y_min end
@@ -67,7 +70,7 @@ function random_circle()
     x_center = math.random(x_min, x_max)
     y_center = math.random(y_min, y_max)
     radius = math.random(shape_min_dim, shape_max_dim)
-    radius = normalise_radius(x_center, y_center, radius)
+    radius = reduce_radius(x_center, y_center, radius)
   until (radius > 0)
   color = math.random(0, 15)
   for i = 1, draw_cnt do
@@ -86,8 +89,8 @@ function random_ellipse()
     y_center = math.random(y_min, y_max)
     radius_x = math.random(shape_min_dim, shape_max_dim)
     radius_y = math.random(shape_min_dim, shape_max_dim)
-    radius_x = normalise_radius(x_center, y_center, radius_x)
-    radius_y = normalise_radius(x_center, y_center, radius_y)
+    radius_x = reduce_radius(x_center, y_center, radius_x)
+    radius_y = reduce_radius(x_center, y_center, radius_y)
   until (radius_x > 0 and radius_y > 0)
   color = math.random(0, 15)
   for i = 1, draw_cnt do
@@ -104,8 +107,8 @@ invalidateoff() -- disable the auto-refresh
 drawclear()
 
 function execute_random(f_tbl)
-  local random_index = math.random(1, #f_tbl) --pick random index from 1 to #f_tbl
-  f_tbl[random_index]() --execute function at the random_index we've picked
+  local random_index = math.random(1, #f_tbl) -- pick a random index from 1 to #f_tbl
+  f_tbl[random_index]() -- execute the function at the random_index we've picked
 end
 
 -- prepare/fill our function table
@@ -119,4 +122,4 @@ for i = 0, 50 do
   execute_random(funcs)
 end
 
-drawrefresh()  -- force a refresh of the drawing
+drawrefresh() -- force a refresh of the drawing
