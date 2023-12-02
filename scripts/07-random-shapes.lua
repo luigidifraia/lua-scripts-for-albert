@@ -37,10 +37,17 @@ function random_rectangle()
   if (x+width > x_max) then width = x_max-x end
   if (y+height > y_max) then height = y_max-y end
   for i = 1, draw_cnt do
-    drawline(x, y, x+width, y, color)
-    drawline(x+width, y, x+width, y+height, color)
-    drawline(x+width, y+height, x, y+height, color)
-    drawline(x, y+height, x, y, color)
+    if (x % 2 == 0) then
+      drawline(x, y, x+width, y, color)
+      drawline(x+width, y, x+width, y+height, color)
+      drawline(x+width, y+height, x, y+height, color)
+      drawline(x, y+height, x, y, color)
+    else
+      local j
+      for j = y, y+height do
+        drawline(x, j, x+width, j, color)
+      end
+    end
   end
 end
 
