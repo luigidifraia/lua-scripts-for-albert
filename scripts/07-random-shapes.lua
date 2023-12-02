@@ -102,10 +102,6 @@ function random_ellipse()
   end
 end
 
-invalidateoff() -- disable the auto-refresh
-
-drawclear()
-
 function execute_random(f_tbl)
   local random_index = math.random(1, #f_tbl) -- pick a random index from 1 to #f_tbl
   f_tbl[random_index]() -- execute the function at the random_index we've picked
@@ -117,8 +113,12 @@ local funcs = {random_line, random_rectangle, random_circle, random_ellipse}
 -- seed the pseudo-random generator
 math.randomseed(os.time())
 
+invalidateoff() -- disable the auto-refresh
+
+drawclear()
+
 -- try executing random functions
-for i = 0, 50 do
+for i = 1, 50 do
   execute_random(funcs)
 end
 
