@@ -16,26 +16,28 @@ shape_min_dim = 30
 shape_max_dim = 100
 
 function random_line()
-  local x_from = math.random(x_min, x_max)
-  local y_from = math.random(y_min, y_max)
-  local x_to = math.random(x_min, x_max)
-  local y_to = math.random(y_min, y_max)
-  local color = math.random(0, 15)
-  local i
+  local x_from, y_from, x_to, y_to, color, i
+  x_from = math.random(x_min, x_max)
+  y_from = math.random(y_min, y_max)
+  x_to = math.random(x_min, x_max)
+  y_to = math.random(y_min, y_max)
+  color = math.random(0, 15)
   for i = 1, draw_cnt do
     drawline(x_from, y_from, x_to, y_to, color)
   end
 end
 
 function random_rectangle()
-  local x = math.random(x_min, x_max)
-  local y = math.random(y_min, y_max)
-  local width = math.random(shape_min_dim, shape_max_dim)
-  local height = math.random(shape_min_dim, shape_max_dim)
-  local color = math.random(0, 15)
-  local i
-  if (x+width > x_max) then width = x_max-x end
-  if (y+height > y_max) then height = y_max-y end
+  local x, y, width, height, color, i
+  repeat
+    x = math.random(x_min, x_max)
+    y = math.random(y_min, y_max)
+    width = math.random(shape_min_dim, shape_max_dim)
+    height = math.random(shape_min_dim, shape_max_dim)
+    if (x+width > x_max) then width = x_max-x end
+    if (y+height > y_max) then height = y_max-y end
+  until (width > 0 and height > 0)
+  color = math.random(0, 15)
   for i = 1, draw_cnt do
     if (x % 2 == 0) then
       drawline(x, y, x+width, y, color)
@@ -65,9 +67,9 @@ function random_circle()
     x_center = math.random(x_min, x_max)
     y_center = math.random(y_min, y_max)
     radius = math.random(shape_min_dim, shape_max_dim)
-    color = math.random(0, 15)
     radius = normalise_radius(x_center, y_center, radius)
   until (radius > 0)
+  color = math.random(0, 15)
   for i = 1, draw_cnt do
     if (x_center % 2 == 0) then
       drawcircle(x_center, y_center, radius, color)
@@ -84,10 +86,10 @@ function random_ellipse()
     y_center = math.random(y_min, y_max)
     radius_x = math.random(shape_min_dim, shape_max_dim)
     radius_y = math.random(shape_min_dim, shape_max_dim)
-    color = math.random(0, 15)
     radius_x = normalise_radius(x_center, y_center, radius_x)
     radius_y = normalise_radius(x_center, y_center, radius_y)
   until (radius_x > 0 and radius_y > 0)
+  color = math.random(0, 15)
   for i = 1, draw_cnt do
     if (x_center % 2 == 0) then
       drawellipse(x_center, y_center, radius_x, radius_y, color)
