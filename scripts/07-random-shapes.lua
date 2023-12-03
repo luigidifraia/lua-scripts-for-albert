@@ -42,15 +42,9 @@ function random_rectangle()
   color = math.random(0, 15)
   for i = 1, draw_cnt do
     if (x % 2 == 0) then
-      drawline(x, y, x+width, y, color)
-      drawline(x+width, y, x+width, y+height, color)
-      drawline(x+width, y+height, x, y+height, color)
-      drawline(x, y+height, x, y, color)
+      drawrect(x, y, width, height, color)
     else
-      local j
-      for j = y, y+height do
-        drawline(x, j, x+width, j, color)
-      end
+      drawrectf(x, y, width, height, color)
     end
   end
 end
