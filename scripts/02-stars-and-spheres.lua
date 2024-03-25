@@ -19,7 +19,7 @@ while i <= 416 - r do
 
   while j < 200 - r do
     if(y % 2 == 0) then
-      drawstar(i, j + 56 + 1, 2*r, 2*r, 10)
+      drawstar(i, j + 56 + 1, 2*r, 10)
     else
       drawcirclef(i + r, j + 56 + r, r, 4)
       drawcirclef(i + r - r/3, j + 56 + r - r/3, r/4, 10)
